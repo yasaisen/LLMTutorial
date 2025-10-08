@@ -88,7 +88,7 @@ Modify the dataset path, LoRA hyperparameters, or training arguments to suit you
 ## Prerequisites
 
 - **Python**: 3.10 is recommended.
-- **Hardware**: A CUDA-capable GPU with at least 16 GB of VRAM is strongly recommended for the Gemma 3 models used across the notebooks.
+- **Hardware**: A CUDA-capable GPU with at least 20 GB of VRAM is strongly recommended for the Gemma 3 models used across the notebooks.
 - **Hugging Face account**: The notebooks load `google/gemma-3-4b-it` and `google/gemma-3-1b-pt`. Make sure your account has access to these checkpoints and that you have accepted their licenses.
 - **Storage**: Fine-tuning checkpoints can consume several gigabytes. Ensure you have free disk space before running the LoRA demo.
 
@@ -119,7 +119,7 @@ huggingface-cli login
 
 Several notebooks expect external resources that are not bundled in the repository:
 
-- **Knowledge base for RAG and LoRA**: Provide a UTF-8 JSONL file at `./dataset/ncku_wikipedia_2510080406.jsonl`. Each line should be a JSON object containing at least a `"text"` field with the content to index or train on. Additional metadata (e.g., titles) can be included and will be preserved in the dataset even if not directly used.
+- **Knowledge base for RAG and LoRA**: Provide a UTF-8 JSONL file at `./demo_dataset/ncku_wikipedia_2510080406.jsonl`. Each line should be a JSON object containing at least a `"text"` field with the content to index or train on. Additional metadata (e.g., titles) can be included and will be preserved in the dataset even if not directly used.
 - **Custom corpora**: To use a different file path, update the `documents_path` variable in the relevant notebook cells. Ensure the JSONL structure matches what `create_dataset()` and `preprocess_pages2chunks()` expect (i.e., a flat dictionary where `text` holds the body content).
 - **New tools**: In the function-calling demo, add new tool definitions to `TOOL_DICT` by following the calculator example—include a callable `function`, human-readable `description`, and a JSON schema under `parameters`.
 
