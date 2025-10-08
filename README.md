@@ -70,7 +70,7 @@ Pipeline overview:
 6. **Generation** – `rag_ask()` orchestrates retrieval + generation and returns both the response and the supporting documents.
 7. **Demo run** – Sample questions about National Cheng Kung University show how the model uses the retrieved knowledge to answer factual questions more reliably than pure inference.
 
-Before running the notebook, place your own knowledge base at `./dataset/ncku_wikipedia_2510080406.jsonl` (see [Working With Your Own Data](#working-with-your-own-data)).
+Before running the notebook, place your own knowledge base at `./demo_dataset/ncku_wikipedia_2510080406.jsonl` (see [Working With Your Own Data](#working-with-your-own-data)).
 
 ### 4. LoRAFinetune_demo.ipynb
 
