@@ -18,12 +18,14 @@ A collection of end-to-end notebooks that illustrate the core building blocks be
 
 ```
 LLMTutorial/
-├── LICENSE                    # MIT License for the project
-├── README.md                  # You are here
-├── LLMInference_demo.ipynb    # Basic chat inference with Gemma 3
-├── funcCalling_demo.ipynb     # Function-calling agent that can use tools
-├── RAG_demo.ipynb             # Retrieval-augmented generation pipeline
-└── LoRAFinetune_demo.ipynb    # Parameter-efficient fine-tuning with LoRA
+├── LICENSE                             # MIT License for the project
+├── README.md                           # You are here
+├── LLMInference_demo.ipynb             # Basic chat inference with Gemma 3
+├── funcCalling_demo.ipynb              # Function-calling agent that can use tools
+├── RAG_demo.ipynb                      # Retrieval-augmented generation pipeline
+└── LoRAFinetune_demo.ipynb             # Parameter-efficient fine-tuning with LoRA
+├── demo_dataset/
+│   └── ncku_wikipedia_2510080406.jsonl # demo data for Retrieval-augmented generation
 ```
 
 All notebooks share a set of helper utilities (`create_model`, `lm_template`, and `generate`) so you can move smoothly between inference, tool use, retrieval, and fine-tuning scenarios.
