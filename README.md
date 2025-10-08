@@ -4,15 +4,14 @@ A collection of end-to-end notebooks that illustrate the core building blocks be
 
 ## Table of Contents
 - [Repository Structure](#repository-structure)
-- [Prerequisites](#prerequisites)
-- [Environment Setup](#environment-setup)
 - [Notebook Walkthroughs](#notebook-walkthroughs)
   - [1. LLMInference\_demo.ipynb](#1-llminference_demoipynb)
   - [2. funcCalling\_demo.ipynb](#2-funccalling_demoipynb)
   - [3. RAG\_demo.ipynb](#3-rag_demoipynb)
   - [4. LoRAFinetune\_demo.ipynb](#4-lorafinetune_demoipynb)
+- [Prerequisites](#prerequisites)
+- [Installation](#installation)
 - [Working With Your Own Data](#working-with-your-own-data)
-- [Troubleshooting](#troubleshooting)
 - [License](#license)
 
 ## Repository Structure
@@ -28,45 +27,6 @@ LLMTutorial/
 ```
 
 All notebooks share a set of helper utilities (`create_model`, `lm_template`, and `generate`) so you can move smoothly between inference, tool use, retrieval, and fine-tuning scenarios.
-
-## Prerequisites
-
-- **Python**: 3.9 or newer is recommended.
-- **Hardware**: A CUDA-capable GPU with at least 16 GB of VRAM is strongly recommended for the Gemma 3 models used across the notebooks. CPU-only execution is possible for smaller workloads but will be significantly slower.
-- **Hugging Face account**: The notebooks load `gemma-3-4b-it` and `google/gemma-3-1b-pt`. Make sure your account has access to these checkpoints and that you have accepted their licenses.
-- **Storage**: Fine-tuning checkpoints can consume several gigabytes. Ensure you have free disk space before running the LoRA demo.
-
-## Environment Setup
-
-1. **Clone the repository** (if you have not already):
-   ```bash
-   git clone https://github.com/<your-account>/LLMTutorial.git
-   cd LLMTutorial
-   ```
-
-2. **Create and activate a virtual environment** (optional but recommended):
-   ```bash
-   python -m venv .venv
-   source .venv/bin/activate  # On Windows use: .venv\Scripts\activate
-   ```
-
-3. **Install Python dependencies**:
-   ```bash
-   pip install --upgrade pip
-   pip install torch transformers sentence-transformers faiss-cpu datasets peft accelerate tqdm ipywidgets
-   ```
-   - Install `faiss-gpu` instead of `faiss-cpu` if you have CUDA available.
-   - The notebooks rely on `ipywidgets` for rich progress bars; without it you may see an `IProgress not found` warning when running cells.
-
-4. **Authenticate with Hugging Face** (required to download Gemma checkpoints):
-   ```bash
-   huggingface-cli login
-   ```
-
-5. **Launch Jupyter**:
-   ```bash
-   jupyter lab  # or: jupyter notebook
-   ```
 
 ## Notebook Walkthroughs
 
@@ -123,6 +83,36 @@ Workflow:
 
 Modify the dataset path, LoRA hyperparameters, or training arguments to suit your project. Because only adapter weights are updated, this approach is GPU- and memory-friendly compared with full fine-tuning.
 
+## Prerequisites
+
+- **Python**: 3.10 is recommended.
+- **Hardware**: A CUDA-capable GPU with at least 16 GB of VRAM is strongly recommended for the Gemma 3 models used across the notebooks.
+- **Hugging Face account**: The notebooks load `google/gemma-3-4b-it` and `google/gemma-3-1b-pt`. Make sure your account has access to these checkpoints and that you have accepted their licenses.
+- **Storage**: Fine-tuning checkpoints can consume several gigabytes. Ensure you have free disk space before running the LoRA demo.
+
+## Installation
+
+The project targets Python 3.10 and CUDA 12.1.  The commands below create a conda environment and install the required packages.
+
+```bash
+conda create --name LLMTutorial python=3.10
+conda activate LLMTutorial
+
+git clone https://github.com/yasaisen/LLMTutorial.git
+cd LLMTutorial
+
+# Additional dependencies
+pip install torch==2.4.1 torchvision==0.19.1 torchaudio==2.4.1 --index-url https://download.pytorch.org/whl/cu121
+pip install transformers==4.51.3 accelerate==0.26.0 faiss-cpu==1.11.0.post1 sentence-transformers==5.0.0 evaluate==0.4.5 peft==0.13.2
+
+# Authenticate with Hugging Face to access Gemma checkpoints
+huggingface-cli login
+```
+
+> **Note**: The repository does not include a `setup.py`.  Add the repository
+> root to your `PYTHONPATH` or work within this directory when running the
+> scripts.
+
 ## Working With Your Own Data
 
 Several notebooks expect external resources that are not bundled in the repository:
@@ -130,14 +120,6 @@ Several notebooks expect external resources that are not bundled in the reposito
 - **Knowledge base for RAG and LoRA**: Provide a UTF-8 JSONL file at `./dataset/ncku_wikipedia_2510080406.jsonl`. Each line should be a JSON object containing at least a `"text"` field with the content to index or train on. Additional metadata (e.g., titles) can be included and will be preserved in the dataset even if not directly used.
 - **Custom corpora**: To use a different file path, update the `documents_path` variable in the relevant notebook cells. Ensure the JSONL structure matches what `create_dataset()` and `preprocess_pages2chunks()` expect (i.e., a flat dictionary where `text` holds the body content).
 - **New tools**: In the function-calling demo, add new tool definitions to `TOOL_DICT` by following the calculator example—include a callable `function`, human-readable `description`, and a JSON schema under `parameters`.
-
-## Troubleshooting
-
-- **`IProgress not found` warning**: Install `ipywidgets` and enable widgets in Jupyter. The warning does not stop execution but progress bars will be missing otherwise.
-- **Model download errors**: Confirm you are logged into Hugging Face, have accepted the Gemma model licenses, and are using a sufficiently new version of `transformers` (v4.38 or later is recommended for the Gemma 3 family).
-- **CUDA out of memory**: Reduce `max_new_tokens`, switch to a smaller checkpoint, enable 8-bit loading (e.g., `load_in_8bit=True` in `from_pretrained`), or run on CPU for experimentation.
-- **FAISS import failures**: Install the correct FAISS package for your platform (`faiss-cpu` for most environments, `faiss-gpu` if CUDA is available).
-- **Training instability**: Adjust `learning_rate`, `num_train_epochs`, or `gradient_accumulation_steps` in `TrainingArguments`. Monitoring evaluation loss via the built-in validation split helps detect overfitting early.
 
 ## License
 
