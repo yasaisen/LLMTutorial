@@ -60,6 +60,7 @@ Use this notebook as a template for integrating APIs, databases, or other determ
 ### 3. RAG_demo.ipynb
 
 [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1UZCo4bDtcMjE-FmA0ZWPMkOoERK1iIbF?usp=sharing)
+
 Implements a retrieval-augmented generation workflow combining sentence embeddings, FAISS vector search, and the chat model.
 
 Pipeline overview:
